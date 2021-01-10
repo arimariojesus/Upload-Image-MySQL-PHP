@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cadastro de fotos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <script type="text/javascript">
+    $(function ($) {
+      // Quando enviado o formulário
+      $('#save').click(function(event) {
+        event.preventDefault();
+        console.log($('#form-control').val());
+
+      // Armazenando objetos em variáveis para utilizá-los posteriormente
+      let form = $(this);
+      let button = $('#save');
+      let message = $('#message');
+
+      // Exibindo indicador de carregamento (Bootstrap)
+      button.button('loading');
+
+      // Enviando formulário
+      $.ajax({
+        url: 'ajax/save.php',
+        // Definindo tipo de retorno do servidor
+        dataType: 'json',
+        // Se a requisição foi um sucesso
+        success: function(response) {
+          // Se cadastrado com sucesso
+          if(response.success) {
+            // Definindo estilo da mensagem (sucesso)
+            message.attr('class', 'alert alert-success');
+
+            // Limpando formulário
+            form.resetForm();
+          }else {
+            // Definindo estilo da mensagem (erro)
+            message.attr('class', 'alert alert-danger');
+          }
+
+          // Exibindo mensagem
+          message.html(response.message);
+          // Escondendo indicaro de carregamento
+          button.button('reset');
+        },
+
+        // Se houver algum erro na requisição
+        error: function() {
+          // Definindo estilo da mensagem (erro)
+          message.attr('class', 'alert alert-danger');
+          // Exibindo mensagem
+          message.html(response.message);
+          // Escondendo indicador de carregamento
+          button.button('reset');
+        }
+      });
+
+      // Retorna FALSE para que o formulário não seja enviado de forma convencional
+      return false;
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro de Foto</h1>
+
+    <form id="form" action="ajax/save.php" method="post">
+      <div id="message"></div>
+
+      <div class="form-group">
+        <label>Foto</label>
+        <input class="form-control" type="file" name="foto">
+      </div>
+
+      <input id="save" class="btn btn-primary mt-2" type="submit" value="Salvar" data-loading-text="Salvando...">
+    </form>
+  </div>
+</body>
+</html>
