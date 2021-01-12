@@ -27,13 +27,13 @@ $stmt = $pdo->query('SELECT id, name, type, size FROM images.photos');
       <?php while ($photo = $stmt->fetchObject()): ?>
 
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="./showImage.php?id=<?= $photo->id ?>" />
+        <div class="card">
+          <img src="./showImage.php?id=<?= $photo->id ?>" class="card-imag-top" />
 
-          <div class="caption">
-            <strong>Nome: </strong> <?=$photo->name?> <br/>
-            <strong>Tipo: </strong> <?=$photo->type?> <br/>
-            <strong>Tamanho: </strong> <?=$photo->size?> <br/>
+          <div class="card-body">
+            <div class="card-text"><strong>Nome: </strong> <?=$photo->name?></div>
+            <div class="card-text"><strong>Tipo: </strong> <?=$photo->type?></div>
+            <div class="card-text"><strong>Tamanho: </strong> <?=$photo->size?></div>
           </div>
         </div>
       </div>
