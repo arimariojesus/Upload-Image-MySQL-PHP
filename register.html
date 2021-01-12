@@ -8,15 +8,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <script type="text/javascript">
     $(function ($) {
       // Quando enviado o formulário
-      $('#save').click(function(event) {
-        event.preventDefault();
-        console.log($('#form-control').val());
+      $('#form').on('submit', function() {
 
       // Armazenando objetos em variáveis para utilizá-los posteriormente
       let form = $(this);
@@ -27,8 +26,7 @@
       button.button('loading');
 
       // Enviando formulário
-      $.ajax({
-        url: 'ajax/save.php',
+      $(this).ajaxSubmit({
         // Definindo tipo de retorno do servidor
         dataType: 'json',
         // Se a requisição foi um sucesso
@@ -72,12 +70,12 @@
   <div class="container">
     <h1>Cadastro de Foto</h1>
 
-    <form id="form" action="ajax/save.php" method="post">
+    <form enctype="multipart/form-data" id="form" action="ajax/save.php" method="post">
       <div id="message"></div>
 
       <div class="form-group">
-        <label>Foto</label>
-        <input class="form-control" type="file" name="foto">
+        <label for="photo">Imagem</label>
+        <input class="form-control" type="file" name="">
       </div>
 
       <input id="save" class="btn btn-primary mt-2" type="submit" value="Salvar" data-loading-text="Salvando...">

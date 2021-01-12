@@ -9,13 +9,13 @@ require_once('../utils/message.php');
 define('MAX_SIZE', (2 * 1024 * 1024));
 
 // Verificando se selecionou alguma image
-if(!isset($_FILES['foto'])) {
+if(!isset($_FILES['photo'])) {
   echo returnMessage('Selecione uma imagem');
   exit;
 }
 
 // Recupera os dados dos campos
-$photo = $_FILES['foto'];
+$photo = $_FILES['photo'];
 $name = $photo['name'];
 $type = $photo['type'];
 $size = $photo['size'];
